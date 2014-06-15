@@ -96,6 +96,7 @@ struct {
     { "persist.service.bdroid.", AID_BLUETOOTH,   0 },
     { "selinux."         , AID_SYSTEM,   0 },
     { "tcmd.",            AID_MOT_TCMD, AID_MOT_WHISPER },
+    { "persist.multisim.", AID_RADIO, 0 }, // kpg647, IKDVXPSE-795
     { NULL, 0, 0 }
 };
 
