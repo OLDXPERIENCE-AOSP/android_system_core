@@ -151,6 +151,20 @@ typedef enum {
     AUDIO_FORMAT_HE_AAC_V1           = 0x05000000UL,
     AUDIO_FORMAT_HE_AAC_V2           = 0x06000000UL,
     AUDIO_FORMAT_VORBIS              = 0x07000000UL,
+    AUDIO_FORMAT_EVRC                = 0x08000000UL,
+    AUDIO_FORMAT_QCELP               = 0x09000000UL,
+    AUDIO_FORMAT_AC3                 = 0x0a000000UL,
+    AUDIO_FORMAT_AC3_PLUS            = 0x0b000000UL,
+    AUDIO_FORMAT_DTS                 = 0x0c000000UL,
+    AUDIO_FORMAT_WMA                 = 0x0d000000UL,
+    AUDIO_FORMAT_WMA_PRO             = 0x0e000000UL,
+    AUDIO_FORMAT_AAC_ADIF            = 0x0f000000UL,
+    AUDIO_FORMAT_EVRCB               = 0x10000000UL,
+    AUDIO_FORMAT_EVRCWB              = 0x11000000UL,
+    AUDIO_FORMAT_EAC3                = 0x12000000UL,
+    AUDIO_FORMAT_DTS_LBR             = 0x13000000UL,
+    AUDIO_FORMAT_AMR_WB_PLUS         = 0x14000000UL,
+    AUDIO_FORMAT_MP2                 = 0x15000000UL,
     AUDIO_FORMAT_MAIN_MASK           = 0xFF000000UL,
     AUDIO_FORMAT_SUB_MASK            = 0x00FFFFFFUL,
 
@@ -189,6 +203,9 @@ enum {
     AUDIO_CHANNEL_OUT_MONO     = AUDIO_CHANNEL_OUT_FRONT_LEFT,
     AUDIO_CHANNEL_OUT_STEREO   = (AUDIO_CHANNEL_OUT_FRONT_LEFT |
                                   AUDIO_CHANNEL_OUT_FRONT_RIGHT),
+    AUDIO_CHANNEL_OUT_2POINT1  = (AUDIO_CHANNEL_OUT_FRONT_LEFT |
+                                  AUDIO_CHANNEL_OUT_FRONT_RIGHT |
+                                  AUDIO_CHANNEL_OUT_FRONT_CENTER),
     AUDIO_CHANNEL_OUT_QUAD     = (AUDIO_CHANNEL_OUT_FRONT_LEFT |
                                   AUDIO_CHANNEL_OUT_FRONT_RIGHT |
                                   AUDIO_CHANNEL_OUT_BACK_LEFT |
@@ -197,12 +214,21 @@ enum {
                                   AUDIO_CHANNEL_OUT_FRONT_RIGHT |
                                   AUDIO_CHANNEL_OUT_FRONT_CENTER |
                                   AUDIO_CHANNEL_OUT_BACK_CENTER),
+    AUDIO_CHANNEL_OUT_PENTA =    (AUDIO_CHANNEL_OUT_QUAD |
+                                  AUDIO_CHANNEL_OUT_FRONT_CENTER),
     AUDIO_CHANNEL_OUT_5POINT1  = (AUDIO_CHANNEL_OUT_FRONT_LEFT |
                                   AUDIO_CHANNEL_OUT_FRONT_RIGHT |
                                   AUDIO_CHANNEL_OUT_FRONT_CENTER |
                                   AUDIO_CHANNEL_OUT_LOW_FREQUENCY |
                                   AUDIO_CHANNEL_OUT_BACK_LEFT |
                                   AUDIO_CHANNEL_OUT_BACK_RIGHT),
+    AUDIO_CHANNEL_OUT_6POINT1  = (AUDIO_CHANNEL_OUT_FRONT_LEFT |
+                                  AUDIO_CHANNEL_OUT_FRONT_RIGHT |
+                                  AUDIO_CHANNEL_OUT_FRONT_CENTER |
+                                  AUDIO_CHANNEL_OUT_LOW_FREQUENCY |
+                                  AUDIO_CHANNEL_OUT_BACK_LEFT |
+                                  AUDIO_CHANNEL_OUT_BACK_RIGHT |
+                                  AUDIO_CHANNEL_OUT_BACK_CENTER),
     // matches the correct AudioFormat.CHANNEL_OUT_7POINT1_SURROUND definition for 7.1
     AUDIO_CHANNEL_OUT_7POINT1  = (AUDIO_CHANNEL_OUT_FRONT_LEFT |
                                   AUDIO_CHANNEL_OUT_FRONT_RIGHT |
@@ -246,10 +272,24 @@ enum {
     AUDIO_CHANNEL_IN_Z_AXIS          = 0x2000,
     AUDIO_CHANNEL_IN_VOICE_UPLINK    = 0x4000,
     AUDIO_CHANNEL_IN_VOICE_DNLINK    = 0x8000,
-
+    AUDIO_CHANNEL_IN_FRONT_LEFT      = 0x10000,
+    AUDIO_CHANNEL_IN_FRONT_RIGHT     = 0x20000,
+    AUDIO_CHANNEL_IN_FRONT_CENTER    = 0x40000,
+    AUDIO_CHANNEL_IN_LOW_FREQUENCY   = 0x80000,
+    AUDIO_CHANNEL_IN_BACK_LEFT       = 0x100000,
+    AUDIO_CHANNEL_IN_BACK_RIGHT      = 0x200000,
+    AUDIO_CHANNEL_IN_FRONT_BACK = (AUDIO_CHANNEL_IN_FRONT | AUDIO_CHANNEL_IN_BACK),
     AUDIO_CHANNEL_IN_MONO   = AUDIO_CHANNEL_IN_FRONT,
     AUDIO_CHANNEL_IN_STEREO = (AUDIO_CHANNEL_IN_LEFT | AUDIO_CHANNEL_IN_RIGHT),
-    AUDIO_CHANNEL_IN_FRONT_BACK = (AUDIO_CHANNEL_IN_FRONT | AUDIO_CHANNEL_IN_BACK),
+    AUDIO_CHANNEL_IN_5POINT1 = (AUDIO_CHANNEL_IN_FRONT_LEFT |
+                               AUDIO_CHANNEL_IN_FRONT_RIGHT |
+                               AUDIO_CHANNEL_IN_FRONT_CENTER |
+                               AUDIO_CHANNEL_IN_LOW_FREQUENCY |
+                               AUDIO_CHANNEL_IN_BACK_LEFT |
+                               AUDIO_CHANNEL_IN_BACK_RIGHT),
+    AUDIO_CHANNEL_IN_VOICE_UPLINK_MONO = (AUDIO_CHANNEL_IN_VOICE_UPLINK | AUDIO_CHANNEL_IN_MONO),
+    AUDIO_CHANNEL_IN_VOICE_DNLINK_MONO = (AUDIO_CHANNEL_IN_VOICE_DNLINK | AUDIO_CHANNEL_IN_MONO),
+    AUDIO_CHANNEL_IN_VOICE_CALL_MONO   = (AUDIO_CHANNEL_IN_VOICE_UPLINK_MONO | AUDIO_CHANNEL_IN_VOICE_DNLINK_MONO),
     AUDIO_CHANNEL_IN_ALL    = (AUDIO_CHANNEL_IN_LEFT |
                                AUDIO_CHANNEL_IN_RIGHT |
                                AUDIO_CHANNEL_IN_FRONT |
@@ -263,7 +303,8 @@ enum {
                                AUDIO_CHANNEL_IN_Y_AXIS |
                                AUDIO_CHANNEL_IN_Z_AXIS |
                                AUDIO_CHANNEL_IN_VOICE_UPLINK |
-                               AUDIO_CHANNEL_IN_VOICE_DNLINK),
+                               AUDIO_CHANNEL_IN_VOICE_DNLINK |
+                               AUDIO_CHANNEL_IN_5POINT1),
 };
 
 typedef uint32_t audio_channel_mask_t;
@@ -311,6 +352,9 @@ enum {
     AUDIO_DEVICE_OUT_USB_ACCESSORY             = 0x2000,
     AUDIO_DEVICE_OUT_USB_DEVICE                = 0x4000,
     AUDIO_DEVICE_OUT_REMOTE_SUBMIX             = 0x8000,
+    AUDIO_DEVICE_OUT_ANC_HEADSET               = 0x10000,
+    AUDIO_DEVICE_OUT_ANC_HEADPHONE             = 0x20000,
+    AUDIO_DEVICE_OUT_PROXY                     = 0x40000,
     AUDIO_DEVICE_OUT_FM                        = 0x80000,
     AUDIO_DEVICE_OUT_FM_TX                     = 0x100000,
     AUDIO_DEVICE_OUT_DEFAULT                   = AUDIO_DEVICE_BIT_DEFAULT,
@@ -330,6 +374,9 @@ enum {
                                  AUDIO_DEVICE_OUT_USB_ACCESSORY |
                                  AUDIO_DEVICE_OUT_USB_DEVICE |
                                  AUDIO_DEVICE_OUT_REMOTE_SUBMIX |
+				 AUDIO_DEVICE_OUT_ANC_HEADSET |
+                                 AUDIO_DEVICE_OUT_ANC_HEADPHONE |
+                                 AUDIO_DEVICE_OUT_PROXY |
                                  AUDIO_DEVICE_OUT_FM |
                                  AUDIO_DEVICE_OUT_FM_TX |
                                  AUDIO_DEVICE_OUT_DEFAULT),
@@ -356,6 +403,8 @@ enum {
     AUDIO_DEVICE_IN_DGTL_DOCK_HEADSET     = AUDIO_DEVICE_BIT_IN | 0x400,
     AUDIO_DEVICE_IN_USB_ACCESSORY         = AUDIO_DEVICE_BIT_IN | 0x800,
     AUDIO_DEVICE_IN_USB_DEVICE            = AUDIO_DEVICE_BIT_IN | 0x1000,
+    AUDIO_DEVICE_IN_ANC_HEADSET           = AUDIO_DEVICE_BIT_IN | 0x2000,
+    AUDIO_DEVICE_IN_PROXY                 = AUDIO_DEVICE_BIT_IN | 0x4000,
     AUDIO_DEVICE_IN_FM_RX                 = AUDIO_DEVICE_BIT_IN | 0x8000,
     AUDIO_DEVICE_IN_FM_RX_A2DP            = AUDIO_DEVICE_BIT_IN | 0x10000,
     AUDIO_DEVICE_IN_DEFAULT               = AUDIO_DEVICE_BIT_IN | AUDIO_DEVICE_BIT_DEFAULT,
@@ -373,6 +422,8 @@ enum {
                                AUDIO_DEVICE_IN_DGTL_DOCK_HEADSET |
                                AUDIO_DEVICE_IN_USB_ACCESSORY |
                                AUDIO_DEVICE_IN_USB_DEVICE |
+			       AUDIO_DEVICE_IN_ANC_HEADSET |
+                               AUDIO_DEVICE_IN_PROXY |
 		               AUDIO_DEVICE_IN_FM_RX |
                                AUDIO_DEVICE_IN_FM_RX_A2DP |
                                AUDIO_DEVICE_IN_DEFAULT),
@@ -404,7 +455,14 @@ typedef enum {
     AUDIO_OUTPUT_FLAG_DEEP_BUFFER = 0x8, // use deep audio buffers
     AUDIO_OUTPUT_FLAG_COMPRESS_OFFLOAD = 0x10,  // offload playback of compressed
                                                 // streams to hardware codec
-    AUDIO_OUTPUT_FLAG_NON_BLOCKING = 0x20 // use non-blocking write
+    AUDIO_OUTPUT_FLAG_NON_BLOCKING = 0x20, // use non-blocking write
+
+//Qualcomm Flags
+    AUDIO_OUTPUT_FLAG_LPA = 0x1000,      // use LPA
+    AUDIO_OUTPUT_FLAG_TUNNEL = 0x2000,   // use Tunnel
+    AUDIO_OUTPUT_FLAG_VOIP_RX = 0x4000   // use this flag in combination with DIRECT to
+                                         // indicate HAL to activate EC & NS
+                                         // path for VOIP calls
 } audio_output_flags_t;
 
 /* The audio input flags are analogous to audio output flags.
@@ -554,7 +612,7 @@ static inline audio_channel_mask_t audio_channel_out_mask_from_count(uint32_t ch
     }
 }
 
-/* Similar to above, but for input.  Currently handles only mono and stereo. */
+/* Similar to above, but for input.  Currently handles mono and stereo and 5.1 input. */
 static inline audio_channel_mask_t audio_channel_in_mask_from_count(uint32_t channel_count)
 {
     switch (channel_count) {
@@ -562,6 +620,8 @@ static inline audio_channel_mask_t audio_channel_in_mask_from_count(uint32_t cha
         return AUDIO_CHANNEL_IN_MONO;
     case 2:
         return AUDIO_CHANNEL_IN_STEREO;
+    case 6:
+        return AUDIO_CHANNEL_IN_5POINT1;
     default:
         return 0;
     }
@@ -582,6 +642,19 @@ static inline bool audio_is_valid_format(audio_format_t format)
     case AUDIO_FORMAT_HE_AAC_V1:
     case AUDIO_FORMAT_HE_AAC_V2:
     case AUDIO_FORMAT_VORBIS:
+    case AUDIO_FORMAT_QCELP:
+    case AUDIO_FORMAT_EVRC:
+    case AUDIO_FORMAT_EVRCB:
+    case AUDIO_FORMAT_EVRCWB:
+    case AUDIO_FORMAT_AC3:
+    case AUDIO_FORMAT_EAC3:
+    case AUDIO_FORMAT_AAC_ADIF:
+    case AUDIO_FORMAT_WMA:
+    case AUDIO_FORMAT_WMA_PRO:
+    case AUDIO_FORMAT_DTS:
+    case AUDIO_FORMAT_DTS_LBR:
+    case AUDIO_FORMAT_AMR_WB_PLUS:
+    case AUDIO_FORMAT_MP2:
         return true;
     default:
         return false;
@@ -607,6 +680,9 @@ static inline size_t audio_bytes_per_sample(audio_format_t format)
         break;
     case AUDIO_FORMAT_PCM_8_BIT:
         size = sizeof(uint8_t);
+        break;
+    case AUDIO_FORMAT_AMR_WB:
+        size = 61;
         break;
     default:
         break;
