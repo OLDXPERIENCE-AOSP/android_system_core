@@ -93,7 +93,7 @@ enum {
     CAMERA_MSG_ALL_MSGS = 0xFFFF
 };
 
-+/** meta data type in CameraMetaDataCallback */
+/** meta data type in CameraMetaDataCallback */
 
 enum {
     CAMERA_META_DATA_ASD = 0x001,    //ASD data
