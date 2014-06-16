@@ -584,26 +584,10 @@ int fs_mgr_mount_all(struct fstab *fstab)
             }
             encrypted = 1;
         } else {
-/*            ERROR("Cannot mount filesystem on %s at %s\n",
-                    fstab->recs[i].blk_device, fstab->recs[i].mount_point);
-	    if (!strncmp(fstab->recs[i].mount_point, "/data", 5)) {
-                int rc;
-                rc = recover_userdata(fstab->recs[i].fs_type, fstab->recs[i].blk_device, fstab->recs[i].mount_point);
-                if (!rc) {
-                    /* Userdata recovery succeeded, retry this mount. */
-                    i--;
-                    continue;
-                } else {
-                    ERROR("userdata format failed.\n");
-                }
-           }
-           goto out;*/
-
             ERROR("Failed to mount an un-encryptable or wiped partition on"
                     "%s at %s options: %s error: %s\n",
                     fstab->recs[i].blk_device, fstab->recs[i].mount_point,
                     fstab->recs[i].fs_options, strerror(mount_errno));            goto out;
-
         }
     }
 
