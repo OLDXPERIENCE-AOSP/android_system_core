@@ -94,8 +94,6 @@
 #define AID_NET_BW_STATS  3006  /* read bandwidth statistics */
 #define AID_NET_BW_ACCT   3007  /* change bandwidth statistics accounting */
 #define AID_NET_BT_STACK  3008  /* bluetooth: access config files */
-#define AID_QCOM_DIAG     3009  /* can read/write /dev/diag */
-
 #define AID_QCOM_ONCRPC   3009  /* can read/write /dev/oncrpc files */
 #define AID_QCOM_DIAG     3010  /* can read/write /dev/diag */
 
@@ -112,7 +110,6 @@
 #define AID_MOT_SECCLKD   9008  /* mot_secclkd */
 #define AID_MOT_WHISPER   9009  /* Whisper Protocol access */
 #define AID_MOT_CAIF      9010  /* can create CAIF sockets */
-#define AID_MOT_DLNA      9011  /*DLNA native */
 #define AID_MOT_DLNA      9011  /* DLNA native */
 #endif // MOTOROLA_UIDS
 
@@ -209,22 +206,8 @@ static const struct android_id_info android_ids[] = {
 
     { "misc",          AID_MISC, },
     { "nobody",        AID_NOBODY, },
-    { "qcom_diag", AID_QCOM_DIAG, },
-    { "mot_accy",	AID_MOT_ACCY, },
-    { "mot_pwric",	AID_MOT_PWRIC, },
-    { "mot_usb",	AID_MOT_USB, },
-    { "mot_drm",	AID_MOT_DRM, },
-    { "mot_tcmd",	AID_MOT_TCMD, },
-    { "mot_sec_rtc",	AID_MOT_SEC_RTC, },
-    { "mot_tombstone",	AID_MOT_TOMBSTONE, },
-    { "mot_tpapi",	AID_MOT_TPAPI, },
-    { "mot_secclkd",	AID_MOT_SECCLKD, },
-    { "mot_whisper",	AID_MOT_WHISPER, },
-    { "mot_caif",	AID_MOT_CAIF, },
-    { "mot_dlna",	AID_MOT_DLNA, },
     { "theme_man", AID_THEMEMAN },
     { "audit",      AID_AUDIT, },
-
 };
 
 #define android_id_count \
